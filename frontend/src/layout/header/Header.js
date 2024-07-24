@@ -1,28 +1,18 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
-import CartIcon from "../../icons/CartIcon";
+import React, { Component } from 'react';
+
+import NavBar from '../../components/navBar/NavBar';
+import CartIcon from '../../icons/CartIcon';
+import classes from './Header.module.scss';
 
 class Header extends Component {
   render() {
     return (
-      <header className="header">
-        <nav className="navbar">
-          <ul className="nav-links">
-            <li>
-              <Link to="/">All</Link>
-            </li>
-            <li>
-              <Link to="/category/clothes">Clothes</Link>
-            </li>
-            <li>
-              <Link to="/category/tech">Tech</Link>
-            </li>
-          </ul>
-        </nav>
-        <div className="logo">
-          <img src="/images/logo.png" alt="Logo" />
+      <header className={`${classes.header} container`}>
+        <NavBar />
+        <div className={classes.logo}>
+          <img src='assets/images/logo.png' alt='Logo' />
         </div>
-        <div className="cart-icon">
+        <div className={classes.cartIcon}>
           <CartIcon />
         </div>
       </header>

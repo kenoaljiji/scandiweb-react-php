@@ -1,0 +1,45 @@
+.navbar {
+  position: relative;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+}
+
+.nav-item {
+  margin-right: 20px;
+  position: relative;
+}
+
+.nav-item:last-child {
+  margin-right: 0;
+}
+
+.underline {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: var(--underline-offset); // Use the CSS variable for left offset
+  width: var(--underline-width); // Use the CSS variable for width
+  height: 2px;
+  background-color: #1dcf65; // Active underline color
+  transition: left 0.3s ease, width 0.3s ease;
+  top: 40px;
+}
+
+.link {
+  text-decoration: none;
+  text-transform: uppercase;
+
+  color: black;
+  padding: 10px 15px;
+}
+
+.active .link {
+  font-weight: 600;
+  color: #1dcf65;
+}
+.link:hover {
+  color: #1dcf65;
+}

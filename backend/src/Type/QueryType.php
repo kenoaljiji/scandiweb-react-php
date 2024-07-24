@@ -1,14 +1,16 @@
 <?php
+
 namespace App\Type;
 
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ObjectType;
+use App\Resolvers\ProductResolver;
 
 class QueryType extends ObjectType
 {
     public function __construct()
     {
-       $config = [
+        $config = [
             'name' => 'Query',
             'fields' => [
                 'categories' => [
@@ -19,11 +21,19 @@ class QueryType extends ObjectType
                         return $result->fetch_all(MYSQLI_ASSOC);
                     }
                 ],
-                'products' => [
+                  'products' => [
                     'type' => Type::listOf(ProductType::getInstance()),
+                    'args' => [
+                        'category' => Type::string(),
+                    ],
                     'resolve' => function ($root, $args, $context) {
                         $conn = $context['conn'];
-                        $result = $conn->query("SELECT * FROM products");
+                        $sql = "SELECT * FROM products";
+                        if (isset($args['category']) && $args['category'] !== 'all') {
+                            $category = $conn->real_escape_string($args['category']);
+                            $sql .= " WHERE category = '$category'";
+                        }
+                        $result = $conn->query($sql);
                         return $result->fetch_all(MYSQLI_ASSOC);
                     }
                 ],

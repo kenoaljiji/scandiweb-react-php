@@ -60,26 +60,36 @@ class Product {
         return $this->prices;
     }
 
-    public static function getAllProducts($conn) {
-        $result = $conn->query("SELECT * FROM products");
-        $products = [];
-        while ($row = $result->fetch_assoc()) {
-            $gallery = self::fetchGallery($conn, $row['id']);
-            $attributes = self::fetchAttributes($conn, $row['id']);
-            $prices = self::fetchPrices($conn, $row['id']);
-            $products[] = new Product(
-                $row['id'],
-                $row['name'],
-                $row['in_stock'],
-                $row['description'],
-                $row['category'],
-                $row['brand'],
-                $gallery,
-                $attributes,
-                $prices
-            );
+     public static function getAllProducts($conn, $category = null) {
+        try {
+            $sql = "SELECT * FROM products";
+            if ($category) {
+                $category = $conn->real_escape_string($category);
+                $sql .= " WHERE category = '$category'";
+            }
+            $result = $conn->query($sql);
+            $products = [];
+            while ($row = $result->fetch_assoc()) {
+                $gallery = self::fetchGallery($conn, $row['id']);
+                $attributes = self::fetchAttributes($conn, $row['id']);
+                $prices = self::fetchPrices($conn, $row['id']);
+                $products[] = new Product(
+                    $row['id'],
+                    $row['name'],
+                    $row['in_stock'],
+                    $row['description'],
+                    $row['category'],
+                    $row['brand'],
+                    $gallery,
+                    $attributes,
+                    $prices
+                );
+            }
+            return $products;
+        } catch (\Exception $e) {
+            error_log("Error fetching products: " . $e->getMessage());
+            return [];
         }
-        return $products;
     }
 
     public static function getProductById($conn, $id) {
@@ -102,19 +112,6 @@ class Product {
                 $attributes,
                 $prices
             );
-        }
-        return null;
-    }
-
-    public static function addProduct($conn, $args) {
-        $stmt = $conn->prepare("INSERT INTO products (id, name, in_stock, description, category, brand) VALUES (?, ?, ?, ?, ?, ?)");
-        $id = uniqid();
-        $stmt->bind_param("ssisis", $id, $args['name'], $args['inStock'], $args['description'], $args['category'], $args['brand']);
-        if ($stmt->execute()) {
-            self::insertGallery($conn, $id, $args['gallery']);
-            self::insertAttributes($conn, $id, $args['attributes']);
-            self::insertPrices($conn, $id, $args['prices']);
-            return self::getProductById($conn, $id);
         }
         return null;
     }
@@ -155,39 +152,5 @@ class Product {
             $prices[] = new Price($row['id'], $row['amount'], $row['currency_label'], $row['currency_symbol']);
         }
         return $prices;
-    }
-
-    private static function insertGallery($conn, $productId, $gallery) {
-        foreach ($gallery as $url) {
-            $stmt = $conn->prepare("INSERT INTO galleries (product_id, url) VALUES (?, ?)");
-            $stmt->bind_param("ss", $productId, $url);
-            $stmt->execute();
-        }
-    }
-
-    private static function insertAttributes($conn, $productId, $attributes) {
-        foreach ($attributes as $attribute) {
-            $stmt = $conn->prepare("INSERT INTO attributes (name, type) VALUES (?, ?)");
-            $stmt->bind_param("ss", $attribute['name'], $attribute['type']);
-            if ($stmt->execute()) {
-                $attributeId = $conn->insert_id;
-                foreach ($attribute['items'] as $item) {
-                    $stmt = $conn->prepare("INSERT INTO attribute_items (attribute_id, display_value, value) VALUES (?, ?, ?)");
-                    $stmt->bind_param("iss", $attributeId, $item['displayValue'], $item['value']);
-                    $stmt->execute();
-                }
-                $stmt = $conn->prepare("INSERT INTO product_attributes (product_id, attribute_id) VALUES (?, ?)");
-                $stmt->bind_param("si", $productId, $attributeId);
-                $stmt->execute();
-            }
-        }
-    }
-
-    private static function insertPrices($conn, $productId, $prices) {
-        foreach ($prices as $price) {
-            $stmt = $conn->prepare("INSERT INTO prices (product_id, amount, currency_label, currency_symbol) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("siss", $productId, $price['amount'], $price['currencyLabel'], $price['currencySymbol']);
-            $stmt->execute();
-        }
     }
 }

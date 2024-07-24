@@ -12,15 +12,17 @@ class ProductResolver {
     }
 
     public function resolveProducts($root, $args, $context, ResolveInfo $info) {
-        return Product::getAllProducts($this->conn);
+        try {
+            $category = isset($args['category']) ? $args['category'] : null;
+            return Product::getAllProducts($this->conn, $category);
+        } catch (\Exception $e) {
+            error_log("Error resolving products: " . $e->getMessage());
+            return null;
+        }
     }
 
     public function resolveProduct($root, $args, $context, ResolveInfo $info) {
         $id = $args['id'];
         return Product::getProductById($this->conn, $id);
     }
-
-  /*   public function resolveAddProduct($root, $args, $context, ResolveInfo $info) {
-        return Product::addProduct($this->conn, $args);
-    } */
 }

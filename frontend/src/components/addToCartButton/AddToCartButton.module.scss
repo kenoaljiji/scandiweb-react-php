@@ -1,0 +1,18 @@
+.add-to-cart-button {
+  display: block;
+  width: 100%;
+  padding: 12px 10px;
+  text-transform: uppercase;
+
+  background: #0daf69;
+  color: #fff;
+  border: 1px solid #0daf69;
+
+  margin: 20px 0;
+  cursor: pointer;
+
+  &:hover {
+    background: transparent;
+    color: #000;
+  }
+}

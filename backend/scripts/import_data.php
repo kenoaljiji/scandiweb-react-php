@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/../vendor/autoload.php';
 use App\Database\Database;
 
@@ -8,7 +9,6 @@ $conn = Database::getConnection();
 // Read JSON file
 $json = file_get_contents(__DIR__ . '/../data/data.json');
 $data = json_decode($json, true)['data'];
-
 
 // Insert categories
 foreach ($data['categories'] as $category) {
@@ -66,34 +66,33 @@ foreach ($data['products'] as $product) {
 
     // Insert attributes and attribute items
     foreach ($product['attributes'] as $attribute) {
+        $attr_id = $conn->real_escape_string($attribute['id']);
         $attr_name = $conn->real_escape_string($attribute['name']);
         $attr_type = $conn->real_escape_string($attribute['type']);
 
-        // Insert attribute
-        $sql = "INSERT INTO attributes (name, type) VALUES ('$attr_name', '$attr_type')
-                ON DUPLICATE KEY UPDATE name=VALUES(name)";
+        // Insert attribute using its name as the ID
+        $sql = "INSERT INTO attributes (id, name, type) VALUES ('$attr_id', '$attr_name', '$attr_type')
+                ON DUPLICATE KEY UPDATE name=VALUES(name), type=VALUES(type)";
         if (!$conn->query($sql)) {
             echo "Error: " . $conn->error . "\n";
         }
 
-        $attr_id = $conn->insert_id;
-
         // Insert attribute items
         foreach ($attribute['items'] as $item) {
+            $item_id = $conn->real_escape_string($item['id']);
             $displayValue = $conn->real_escape_string($item['displayValue']);
             $value = $conn->real_escape_string($item['value']);
 
-            $sql = "INSERT INTO attribute_items (attribute_id, displayValue, value) 
-                    VALUES ($attr_id, '$displayValue', '$value')";
+            $sql = "INSERT INTO attribute_items (id, attribute_id, displayValue, value) 
+                    VALUES ('$item_id', '$attr_id', '$displayValue', '$value')
+                    ON DUPLICATE KEY UPDATE displayValue=VALUES(displayValue), value=VALUES(value)";
             if (!$conn->query($sql)) {
                 echo "Error: " . $conn->error . "\n";
             }
 
-            $item_id = $conn->insert_id;
-
             // Link product and attribute
             $sql = "INSERT INTO product_attributes (product_id, attribute_id) 
-                    VALUES ('$id', $attr_id)
+                    VALUES ('$id', '$attr_id')
                     ON DUPLICATE KEY UPDATE attribute_id=VALUES(attribute_id)";
             if (!$conn->query($sql)) {
                 echo "Error: " . $conn->error . "\n";

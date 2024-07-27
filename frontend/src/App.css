@@ -1,6 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+/*
 
+0 - 600PX: phone
+600 - 900 Tablet portrait
+900 - 1200 Tablet landscape 
+{1200 - 1800} is where normal style apply 
+1800px + : Big desktop
+*/
+/*
+$breakpoint argument choices:
+- phone
+- tab-port
+- tab-land 
+- big-desktop
+*/
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 *,
 ::after,
 *::before {
@@ -9,22 +22,25 @@
   box-sizing: border-box;
   max-width: 100%;
 }
+
 html {
   height: 100%;
   font-size: 62.5%;
-
-  @include respond(phone) {
+}
+@media (max-width: 400px) {
+  html {
     font-size: 56%;
   }
 }
+
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   font-weight: 400;
   box-sizing: border-box;
   line-height: 1.2;
   font-size: 1rem;
   min-height: 95%;
-  background: $color-primary;
+  background: "#fff";
   color: rgba(0, 0, 0, 0.788);
   position: relative;
 }
@@ -44,13 +60,16 @@ h4 {
 p {
   font-size: 2rem;
 }
+
 a {
   text-decoration: none;
   font-size: 1.6rem;
 }
+
 a:visited {
   color: #000;
 }
+
 ul li {
   list-style: none;
 }
@@ -60,21 +79,26 @@ ul li {
   margin: 2rem auto;
   padding: 1rem;
 }
+
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   justify-content: center;
   grid-gap: 2rem;
   padding-bottom: 10rem;
-  @include respond(tab-land) {
+}
+@media (max-width: 1200px) {
+  .grid {
     grid-template-columns: repeat(3, 1fr);
   }
-
-  @include respond(tab-port) {
+}
+@media (max-width: 900px) {
+  .grid {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  @include respond(phone) {
+}
+@media (max-width: 400px) {
+  .grid {
     grid-template-columns: 1fr;
   }
-}
+}/*# sourceMappingURL=App.css.map */

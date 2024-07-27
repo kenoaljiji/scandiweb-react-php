@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+}
+
+.nav-links {
+  display: flex;
+  color: #000;
+}
+.nav-links li:not(:last-child) {
+  margin-right: 10px;
+}
+.nav-links a {
+  text-transform: uppercase;
+}/*# sourceMappingURL=Header.module.css.map */

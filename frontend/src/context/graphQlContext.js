@@ -1,53 +1,35 @@
 import React, { createContext, Component } from 'react';
 import { ApolloProvider, gql, useQuery } from '@apollo/client';
 import client from '../services/apollo-client';
+import { GET_PRODUCTS_BY_CATEGORY, GET_PRODUCT_BY_ID } from './queries';
 
 export const ProductsContext = createContext();
 
 export class ProductsProvider extends Component {
   fetchProducts = (category) => {
     return client.query({
-      query: gql`
-        query GetProducts($category: String!) {
-          products(category: $category) {
-            id
-            name
-            inStock
-            description
-            category
-            brand
-            gallery {
-              id
-              url
-            }
-            attributes {
-              id
-              name
-              type
-              items {
-                id
-                displayValue
-                value
-              }
-            }
-            prices {
-              amount
-              currency {
-                label
-                symbol
-              }
-            }
-          }
-        }
-      `,
+      query: GET_PRODUCTS_BY_CATEGORY,
       variables: { category },
     });
   };
 
+  fetchProductById = (productId) => {
+    return client.query({
+      query: GET_PRODUCT_BY_ID,
+      variables: { productId },
+    });
+  };
+
   render() {
+    const { children } = this.props;
+    const contextValue = {
+      fetchProducts: this.fetchProducts,
+      fetchProductById: this.fetchProductById,
+    };
+
     return (
-      <ProductsContext.Provider value={this.fetchProducts}>
-        {this.props.children}
+      <ProductsContext.Provider value={contextValue}>
+        {children}
       </ProductsContext.Provider>
     );
   }
@@ -56,8 +38,12 @@ export class ProductsProvider extends Component {
 export const withProducts = (Component) => (props) =>
   (
     <ProductsContext.Consumer>
-      {(fetchProducts) => (
-        <Component {...props} fetchProducts={fetchProducts} />
+      {(context) => (
+        <Component
+          {...props}
+          fetchProducts={context.fetchProducts}
+          fetchProductById={context.fetchProductById}
+        />
       )}
     </ProductsContext.Consumer>
   );

@@ -1,0 +1,23 @@
+.product-gallery {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 20px;
+}
+.main-image {
+  width: 500px;
+  max-height: 478px;
+}
+.thumbnails-image {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  img {
+    width: 100px;
+    height: 90px;
+    object-fit: cover;
+    border: 1px solid rgba(238, 238, 238, 0.466);
+    padding: 5px;
+    cursor: pointer;
+  }
+}

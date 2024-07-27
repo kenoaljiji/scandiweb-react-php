@@ -1,0 +1,43 @@
+.attributes {
+  margin: 2.5rem 0;
+  h3 {
+    margin-top: 2px;
+    font-family: 'Roboto Condensed', sans-serif;
+    text-transform: uppercase;
+  }
+
+  &-item {
+    margin: 2.5rem 0;
+    display: grid;
+    grid-template-columns: repeat(4, min-content);
+    gap: 10px;
+    button {
+      padding: 10px;
+      cursor: pointer;
+
+      background: transparent;
+      border: 1px solid #1d1f22;
+      margin-right: 10px;
+
+      &.selected {
+        color: #fff; // Default selected style
+        background-color: #000; // Default selected background
+      }
+      &.color-attribute {
+        background-color: transparent; // Override for color attributes
+        color: #000;
+        border: 1px solid #000; // Specific style for color attributes
+      }
+    }
+  }
+}
+
+.attributes-size {
+  min-width: 60px;
+  min-height: 45px;
+}
+
+.attributes-color {
+  min-width: 36px;
+  min-height: 36px;
+}

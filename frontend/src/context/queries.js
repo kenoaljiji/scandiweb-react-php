@@ -67,3 +67,18 @@ export const GET_PRODUCT_BY_ID = gql`
     }
   }
 `;
+
+export const GET_ATTRIBUTE_BY_PRODUCT_ID = gql`
+  query fetchAttributes($productId: ID!) {
+    attributes(id: $productId) {
+      id
+      name
+      type
+      items {
+        id
+        displayValue
+        value
+      }
+    }
+  }
+`;

@@ -5,13 +5,16 @@ import ProductListingPage from './pages/ProductListingPage/ProductListingPage';
 import ProductDetailsPage from './pages/productDetailsPage/ProductDetailsPage';
 import NotFound from './pages/notFound/NotFound';
 import './App.scss';
+import Cart from './components/cart/Cart';
 
 class App extends Component {
   render() {
     return (
       <Router>
         <Header />
+
         <div className='container'>
+          <Cart />
           <Routes>
             <Route path='/' element={<ProductListingPage />} />
             <Route

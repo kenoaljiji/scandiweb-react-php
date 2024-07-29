@@ -6,6 +6,7 @@ import { withProducts } from '../../context/graphQlContext';
 import withRouter from '../../hocs/withRouter';
 import Loader from '../../components/loader/Loader';
 import classes from './ProductDetailsPage.module.scss';
+import { toCamelCase } from '../../helpers/normalizeAttributeName';
 
 class ProductDetailPage extends Component {
   state = {
@@ -29,7 +30,7 @@ class ProductDetailPage extends Component {
           const initialAttributes = product.attributes.reduce(
             (acc, attribute) => {
               if (attribute.items && attribute.items.length > 0) {
-                acc[attribute.name] = attribute.items[0].id; // Select the first item by default
+                acc[toCamelCase(attribute.id)] = attribute.items[0].id; // Select the first item by default
               }
               return acc;
             },
@@ -52,10 +53,11 @@ class ProductDetailPage extends Component {
   };
 
   handleAttributeSelect = (attributeName, optionId) => {
+    const attrNameCamelCase = toCamelCase(attributeName);
     this.setState((prevState) => ({
       selectedAttributes: {
         ...prevState.selectedAttributes,
-        [attributeName]: optionId,
+        [attrNameCamelCase]: optionId,
       },
     }));
   };

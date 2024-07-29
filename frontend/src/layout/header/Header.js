@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Cart from '../../components/cart/Cart';
 
 import NavBar from '../../components/navBar/NavBar';
 import CartIcon from '../../icons/CartIcon';

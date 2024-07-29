@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
+import {
+  normalizeAttributeName,
+  toCamelCase,
+} from '../../helpers/normalizeAttributeName';
 import AttributeButton from '../attributeButton/AttributeButton';
 
 import classes from './ProductAttribute.module.scss';
 
 class ProductAttributes extends Component {
   renderAttributeOptions = (attribute) => {
-    const selectedItemId = this.props.selectedAttributes[attribute.name];
+    const attributeCamelCaseName = toCamelCase(attribute.name);
+    const selectedItemId =
+      this.props.selectedAttributes[attributeCamelCaseName];
     return attribute.items.map((item) => (
       <AttributeButton
         key={item.id}
         item={item}
         isSelected={selectedItemId === item.id}
-        onClick={() => this.props.onSelect(attribute.name, item.id)}
+        onClick={() => this.props.onSelect(attributeCamelCaseName, item.id)}
         isColorAttribute={attribute.id === 'Color'}
         backgroundColor={attribute.type === 'swatch' ? item.value : undefined}
       />

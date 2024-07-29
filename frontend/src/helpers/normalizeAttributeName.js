@@ -1,3 +1,6 @@
-export const normalizeAttributeName = (name) => {
-  return name.replace(/[^a-zA-Z0-9]+/g, '').toLowerCase();
+export const toCamelCase = (str) => {
+  return str
+    .replace(/-./g, (x) => x[1].toUpperCase())
+    .replace(/(\s|_|-)(.)/g, (_, __, letter) => letter.toUpperCase())
+    .replace(/^\w/, (c) => c.toLowerCase());
 };

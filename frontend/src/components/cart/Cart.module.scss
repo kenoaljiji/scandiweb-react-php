@@ -1,0 +1,32 @@
+.cart {
+  position: fixed;
+  top: 70px; // Below header
+  right: 0;
+  width: 325px;
+  min-height: 600px;
+  background-color: white;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.cart-item {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.cart-item-quantity {
+  display: flex;
+  align-items: center;
+
+  button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+
+  .selected {
+    border-color: green;
+  }
+}

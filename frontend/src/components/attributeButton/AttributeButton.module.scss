@@ -1,0 +1,25 @@
+.attributes-color,
+.attributes-size {
+  cursor: pointer;
+  padding: 10px;
+  min-width: 60px;
+  min-height: 45px;
+  margin-right: 10px;
+  background: transparent;
+  border: 1px solid #1d1f22; // Default border
+
+  &.selected {
+    background-color: #000; // Selected background for non-color
+    color: #fff; // Text color for selected
+  }
+
+  &.color-attribute {
+    min-width: 40px;
+    min-height: 35px;
+    // Color swatches don't change background
+  }
+
+  &.selected-color {
+    border: 2px solid blue; // Green border for selected color attributes
+  }
+}

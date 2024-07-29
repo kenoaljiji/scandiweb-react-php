@@ -63,7 +63,7 @@ class ProductDetailPage extends Component {
   render() {
     const { product, selectedAttributes, loading } = this.state;
 
-    console.log(selectedAttributes, product);
+    /*   console.log(selectedAttributes, product); */
 
     if (loading) return <Loader />;
 

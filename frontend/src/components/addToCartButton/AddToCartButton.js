@@ -17,6 +17,7 @@ class AddToCartButton extends Component {
   };
 
   render() {
+    console.log(this.props.selectedAttributes);
     return (
       <button
         onClick={this.addToCart}

@@ -1,32 +1,107 @@
+@import '../../styles/variable';
 .cart {
-  position: fixed;
-  top: 70px; // Below header
-  right: 0;
-  width: 325px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
   min-height: 600px;
-  background-color: white;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  overflow-y: auto;
+  overflow: auto;
+  position: relative;
+
+  h4 {
+    font-weight: 500;
+
+    span {
+      font-weight: bold;
+    }
+  }
 }
 
 .cart-item {
-  margin-bottom: 20px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
-}
-
-.cart-item-quantity {
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
+}
 
-  button {
-    padding: 5px 10px;
-    margin: 0 5px;
-    cursor: pointer;
+.cart-item-image {
+  width: 100%;
+
+  margin-right: 10px;
+}
+
+.cart-item-details {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 40% 10% 40%;
+  gap: 10px;
+
+  /*  &:nth-child(1) {
+    width: 150px;
+  } */
+
+  h3 {
+    font-size: 1.6rem;
+    margin-top: 10px;
+    text-transform: initial;
   }
 
-  .selected {
-    border-color: green;
+  button {
+    padding: 5px;
+  }
+
+  h4 {
+    font-weight: 300;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .price {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 20px;
+  }
+
+  .quality-controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      background: transparent;
+      border: 1px solid #000;
+    }
+
+    span {
+      font-size: 1.6rem;
+      font-weight: 500;
+    }
+  }
+}
+.place-order-button {
+  position: absolute;
+  bottom: 10%;
+  margin: 2rem 0;
+  width: 100%;
+  padding: 1.5rem;
+  background: $color-secondary;
+  font-family: inherit;
+  text-transform: uppercase;
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+}
+.total {
+  margin: 2.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto; // Pushes total to the bottom of the cart
+  padding: 10px 0;
+  font-family: 'Raleway';
+  span {
+    font-size: 1.8rem;
+    font-weight: bold;
   }
 }

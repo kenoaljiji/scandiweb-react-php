@@ -16,3 +16,14 @@
     color: #000;
   }
 }
+.disabled {
+  background: rgb(224, 224, 224);
+  color: rgba(88, 85, 85, 0.596);
+  border: none;
+  cursor: not-allowed;
+
+  &:hover {
+    background: rgb(224, 224, 224);
+    color: rgba(88, 85, 85, 0.596);
+  }
+}

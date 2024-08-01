@@ -1,12 +1,19 @@
+@import '../../styles/variable';
 .product-gallery {
   display: grid;
   grid-template-columns: 80px 1fr;
   gap: 20px;
 }
+
 .main-image {
-  width: 500px;
-  max-height: 478px;
+  max-height: 600px;
+  position: relative; /* Needed for absolute positioning of arrows */
+
+  img {
+    max-height: 600px;
+  }
 }
+
 .thumbnails-image {
   display: flex;
   flex-direction: column;
@@ -19,5 +26,46 @@
     border: 1px solid rgba(238, 238, 238, 0.466);
     padding: 5px;
     cursor: pointer;
+
+    &.selected-image {
+      border-color: $color-secondary; // Blue border for the selected image
+      border-width: 2px;
+      padding: 3px; // Adjust padding to ensure the border does not overlap the image
+    }
   }
+}
+
+.arrow-left,
+.arrow-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-left {
+  left: 10px; /* Position the left arrow towards the left edge of the image */
+}
+
+.arrow-right {
+  right: 10px; /* Position the right arrow towards the right edge of the image */
+}
+
+.arrow-left:hover,
+.arrow-right:hover {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.8
+  ); /* Darker background on hover for better visibility */
 }

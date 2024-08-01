@@ -2,9 +2,9 @@ import { ApolloProvider } from '@apollo/client';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { CartProvider } from './context/cartContext';
+import { CartProvider } from './context/CartContext';
+import { ProductsProvider } from './context/ProductsContext';
 
-import { ProductsProvider } from './context/graphQlContext';
 import client from './services/apollo-client';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

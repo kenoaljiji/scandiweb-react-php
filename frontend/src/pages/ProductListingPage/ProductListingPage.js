@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ProductCard from '../../components/product/ProductCard';
-import { withProducts } from '../../context/graphQlContext';
+import ProductCard from '../../components/productCard/ProductCard';
+import { withProducts } from '../../context/ProductsContext';
 import classes from './ProductListingPage.module.scss';
 import withRouter from '../../hocs/withRouter';
 import Loader from '../../components/loader/Loader';
@@ -32,8 +32,6 @@ class ProductListingPage extends Component {
   render() {
     const { products, loading } = this.state;
 
-    console.log(this.props);
-
     return (
       <div className={classes.products}>
         <h3>{this.props.params?.categoryName || 'All'}</h3>
@@ -41,7 +39,7 @@ class ProductListingPage extends Component {
           {loading ? (
             <Loader />
           ) : (
-            products.map((product) => (
+            products?.map((product) => (
               <div key={product.id}>
                 <ProductCard
                   key={product.id}

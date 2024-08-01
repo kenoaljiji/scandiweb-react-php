@@ -3,8 +3,14 @@ import classes from './AttributeButton.module.scss';
 
 class AttributeButton extends Component {
   render() {
-    const { item, isSelected, onClick, isColorAttribute, backgroundColor } =
-      this.props;
+    const {
+      item,
+      isSelected,
+      onClick,
+      isColorAttribute,
+      backgroundColor,
+      size,
+    } = this.props;
     // Prepare a readable item name for use in data-testid
     const itemName = item.name
       ? item.name.replace(/\s+/g, '-').toLowerCase()
@@ -21,6 +27,7 @@ class AttributeButton extends Component {
           : classes['selected']
         : '', // Selected state
       isColorAttribute ? classes['color-attribute'] : '', // Special className for color attributes
+      size === 'small' ? classes['small'] : '', // Small size className
     ].filter(Boolean); // Filter out empty strings to clean up the final class string
 
     // Convert the array of class names into a single string
@@ -31,6 +38,7 @@ class AttributeButton extends Component {
         className={buttonClass}
         onClick={onClick}
         style={backgroundColor ? { backgroundColor } : {}}
+        disabled={size === 'small' ? true : false}
         data-testid={`product-attribute-${itemName}`}
       >
         {isColorAttribute ? null : item.value}

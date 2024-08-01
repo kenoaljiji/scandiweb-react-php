@@ -2,68 +2,22 @@ import React, { Component } from 'react';
 import ProductGallery from '../../components/productGallery/ProductGallery';
 import ProductAttributes from '../../components/productAttribute/ProductAttribute';
 import AddToCartButton from '../../components/addToCartButton/AddToCartButton';
-import { withProducts } from '../../context/graphQlContext';
+import { ProductsContext, withProducts } from '../../context/ProductsContext';
 import withRouter from '../../hocs/withRouter';
 import Loader from '../../components/loader/Loader';
 import classes from './ProductDetailsPage.module.scss';
-import { toCamelCase } from '../../helpers/normalizeAttributeName';
+import parse from 'html-react-parser';
+import { toCamelCase } from '../../helpers/initializeAttribute';
 
 class ProductDetailPage extends Component {
-  state = {
-    product: null,
-    selectedAttributes: {},
-    loading: true,
-  };
-
+  static contextType = ProductsContext;
   componentDidMount() {
-    this.loadProductDetails();
+    const { productId } = this.props.params;
+    this.context.fetchProductById(productId);
   }
 
-  loadProductDetails = () => {
-    const { productId } = this.props.params;
-    this.props
-      .fetchProductById(productId)
-      .then((response) => {
-        const product = response.data.product;
-        if (product) {
-          // Initialize selected attributes by selecting the first item of each attribute
-          const initialAttributes = product.attributes.reduce(
-            (acc, attribute) => {
-              if (attribute.items && attribute.items.length > 0) {
-                acc[toCamelCase(attribute.id)] = attribute.items[0].id; // Select the first item by default
-              }
-              return acc;
-            },
-            {}
-          );
-
-          this.setState({
-            product: product,
-            selectedAttributes: initialAttributes,
-            loading: false,
-          });
-        } else {
-          this.setState({ loading: false });
-        }
-      })
-      .catch((error) => {
-        console.error('Error loading product details:', error);
-        this.setState({ loading: false });
-      });
-  };
-
-  handleAttributeSelect = (attributeName, optionId) => {
-    const attrNameCamelCase = toCamelCase(attributeName);
-    this.setState((prevState) => ({
-      selectedAttributes: {
-        ...prevState.selectedAttributes,
-        [attrNameCamelCase]: optionId,
-      },
-    }));
-  };
-
   render() {
-    const { product, selectedAttributes, loading } = this.state;
+    const { product, selectedAttributes, loading } = this.context;
 
     /*   console.log(selectedAttributes, product); */
 
@@ -75,40 +29,44 @@ class ProductDetailPage extends Component {
           <p>There is no product</p>
         </div>
       );
+    else
+      return (
+        <div className={classes['product-details']}>
+          <ProductGallery images={product.gallery} />
 
-    return (
-      <div className={classes['product-details']}>
-        <ProductGallery images={product.gallery} />
-
-        <div className={classes['product-summary']}>
-          <h4>{product.name}</h4>
-          <ProductAttributes
-            attributes={product.attributes}
-            selectedAttributes={selectedAttributes}
-            onSelect={this.handleAttributeSelect}
-          />
-          <div className={classes.price}>
-            <h3>Price</h3>
-            {product.prices.map((price) => (
-              <span
-                className={classes.value}
-              >{`${price.amount} ${price.currency.symbol}`}</span>
+          <div className={classes['product-summary']}>
+            <h4>{product.name}</h4>
+            {product.attributes?.map((attr) => (
+              <ProductAttributes
+                key={attr.id}
+                attribute={attr}
+                selectedAttribute={selectedAttributes[toCamelCase(attr.name)]}
+                handleAttributeSelect={this.context.handleAttributeSelect}
+                size='big'
+              />
             ))}
+            <div className={classes.price}>
+              <h3>Price</h3>
+              {product?.prices?.map((price, index) => (
+                <span
+                  key={product.id + index}
+                  className={classes.value}
+                >{`${price.amount} ${price.currency.symbol}`}</span>
+              ))}
+            </div>
+            <AddToCartButton
+              product={product}
+              selectedAttributes={selectedAttributes}
+            />
+            <p
+              data-testid='product-description'
+              className={classes['product-description']}
+            >
+              {product.description && parse(product.description)}
+            </p>
           </div>
-          <AddToCartButton
-            product={product}
-            selectedAttributes={selectedAttributes}
-          />
-
-          <p
-            data-testid='product-description'
-            className={classes['product-description']}
-          >
-            {product.description}
-          </p>
         </div>
-      </div>
-    );
+      );
   }
 }
 

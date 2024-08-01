@@ -10,6 +10,22 @@ class ProductGallery extends Component {
     this.setState({ selectedImageIndex: index });
   };
 
+  goPrevious = () => {
+    this.setState((prevState) => ({
+      selectedImageIndex:
+        prevState.selectedImageIndex === 0
+          ? this.props.images.length - 1
+          : prevState.selectedImageIndex - 1,
+    }));
+  };
+
+  goNext = () => {
+    this.setState((prevState) => ({
+      selectedImageIndex:
+        (prevState.selectedImageIndex + 1) % this.props.images.length,
+    }));
+  };
+
   render() {
     const { images } = this.props;
 
@@ -27,6 +43,9 @@ class ProductGallery extends Component {
         <div className={classes['thumbnails-image']}>
           {images?.map((img, index) => (
             <img
+              className={
+                index === selectedImageIndex ? classes['selected-image'] : ''
+              }
               key={img.id + index}
               src={img.url}
               alt={`Thumbnail ${index}`}
@@ -35,7 +54,18 @@ class ProductGallery extends Component {
           ))}
         </div>
         <div className={classes['main-image']}>
+          {images.length > 1 && (
+            <button className={classes['arrow-left']} onClick={this.goPrevious}>
+              &lt;
+            </button>
+          )}
           <img src={images[selectedImageIndex].url} alt='Main product' />
+
+          {images.length > 1 && (
+            <button className={classes['arrow-right']} onClick={this.goNext}>
+              &gt;
+            </button>
+          )}
         </div>
       </div>
     );

@@ -1,11 +1,11 @@
 @import '../../styles/variable';
+
 .cart {
   display: flex;
   flex-direction: column;
-  position: relative;
   min-height: 600px;
-  overflow: auto;
-  position: relative;
+
+  height: 100%;
 
   h4 {
     font-weight: 500;
@@ -46,6 +46,7 @@
 
   button {
     padding: 5px;
+    min-width: 25px;
   }
 
   h4 {
@@ -80,9 +81,21 @@
     }
   }
 }
+
+.attribute {
+  width: 100%;
+  button {
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  div > div {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
 .place-order-button {
-  position: absolute;
-  bottom: 10%;
   margin: 2rem 0;
   width: 100%;
   padding: 1.5rem;
@@ -93,6 +106,23 @@
   border: 0;
   cursor: pointer;
 }
+
+.loader-container {
+  position: relative;
+
+  > div > div {
+    position: absolute;
+    /* top: 0; */
+    bottom: 24px;
+    right: 25px;
+    transform: scale(0.8);
+  }
+  /* > div > div {
+    width: 30px;
+    height: 30px;
+  } */
+}
+
 .total {
   margin: 2.5rem 0;
   display: flex;

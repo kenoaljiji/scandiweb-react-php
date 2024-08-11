@@ -82,3 +82,13 @@ export const GET_ATTRIBUTE_BY_PRODUCT_ID = gql`
     }
   }
 `;
+
+export const PLACE_ORDER_MUTATION = gql`
+  mutation PlaceOrder($items: [OrderItemInput!]!) {
+    insertOrder(items: $items) {
+      success
+      orderId
+      message
+    }
+  }
+`;

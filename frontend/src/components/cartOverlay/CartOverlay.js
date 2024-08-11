@@ -43,7 +43,11 @@ class CartOverlay extends Component {
     };
 
     return (
-      <div className={classes.overlay} onClick={this.closeCart}>
+      <div
+        className={classes.overlay}
+        onClick={this.closeCart}
+        data-testid='cart-overlay'
+      >
         <div
           className={classes['cart-container']}
           onClick={(e) => e.stopPropagation()}

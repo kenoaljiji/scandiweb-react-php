@@ -48,6 +48,26 @@ class QueryType extends ObjectType
                         $result = $conn->query("SELECT * FROM products WHERE id = '$id'");
                         return $result->fetch_assoc();
                     }
+                ],
+                'attributes' => [
+                    'type' => Type::listOf(ProductAttributeType::getInstance()),
+                    'args' => [
+                        'productId' => Type::nonNull(Type::id())
+                    ],
+                    'resolve' => function ($root, $args, $context) {
+                        $conn = $context['conn'];
+                        $productId = $conn->real_escape_string($args['productId']);
+                        $result = $conn->query("SELECT a.id, a.name, a.type FROM attributes a JOIN product_attributes pa ON a.id = pa.attribute_id WHERE pa.product_id = '$productId'");
+                        $attributes = $result->fetch_all(MYSQLI_ASSOC);
+
+                        foreach ($attributes as &$attribute) {
+                            $attributeId = $attribute['id'];
+                            $itemsResult = $conn->query("SELECT * FROM attribute_items WHERE attribute_id = '$attributeId'");
+                            $attribute['items'] = $itemsResult->fetch_all(MYSQLI_ASSOC);
+                        }
+
+                        return $attributes;
+                    }
                 ]
             ]
         ];

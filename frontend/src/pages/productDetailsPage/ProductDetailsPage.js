@@ -19,8 +19,6 @@ class ProductDetailPage extends Component {
   render() {
     const { product, selectedAttributes, loading } = this.context;
 
-    /*   console.log(selectedAttributes, product); */
-
     if (loading) return <Loader />;
 
     if (!product)
@@ -58,12 +56,12 @@ class ProductDetailPage extends Component {
               product={product}
               selectedAttributes={selectedAttributes}
             />
-            <p
+            <div
               data-testid='product-description'
               className={classes['product-description']}
             >
               {product.description && parse(product.description)}
-            </p>
+            </div>
           </div>
         </div>
       );

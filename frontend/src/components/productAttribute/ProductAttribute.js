@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { toCamelCase } from '../../helpers/initializeAttribute';
 import AttributeButton from '../attributeButton/AttributeButton';
 import classes from './ProductAttribute.module.scss';
 

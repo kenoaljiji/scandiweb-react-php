@@ -17,10 +17,7 @@ class App extends Component {
         <div className='container'>
           <Routes>
             <Route path='/' element={<ProductListingPage />} />
-            <Route
-              path='/category/:categoryName'
-              element={<ProductListingPage />}
-            />
+            <Route path='/:categoryName' element={<ProductListingPage />} />
             <Route
               path='/product/:category/:productId'
               element={<ProductDetailsPage />}

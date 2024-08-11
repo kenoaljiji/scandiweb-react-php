@@ -20,7 +20,7 @@ class ProductCard extends Component {
     const { product } = this.props;
 
     const initialAttributes = initializeAttributes(product.attributes);
-    console.log(initialAttributes);
+
     const cartItem = {
       ...product,
       selectedAttributes: initialAttributes,

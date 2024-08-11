@@ -6,10 +6,10 @@ class CartIcon extends Component {
   static contextType = CartContext;
 
   render() {
-    const { cartItems } = this.context;
+    const { cartItems, totalItems } = this.context;
 
     return (
-      <div className={classes['cart-icon']}>
+      <div className={classes['cart-icon']} data-testid='cart-btn'>
         <svg
           style={{ cursor: 'pointer' }}
           width='25'
@@ -31,7 +31,7 @@ class CartIcon extends Component {
             fill='#43464E'
           />
         </svg>
-        {cartItems.length > 0 && <span>{cartItems.length}</span>}
+        {totalItems > 0 && <span>{totalItems}</span>}
       </div>
     );
   }

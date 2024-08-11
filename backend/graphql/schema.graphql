@@ -40,6 +40,12 @@ type Price {
   currencySymbol: String!
 }
 
+type Order {
+  id: ID!
+  total: Float!
+  createdAt: String!
+}
+
 type Query {
   categories: [Category!]!
   category(id: ID!): Category
@@ -50,32 +56,19 @@ type Query {
 }
 
 type Mutation {
-  insertOrder(productId: ID!, quantity: Int!): Boolean!
-  addProduct(
-    name: String!
-    inStock: Boolean!
-    description: String
-    categoryId: Int
-    brand: String
-    gallery: [String]
-    attributes: [AttributeInput]
-    prices: [PriceInput]
-  ): Product
+  insertOrder(items: [OrderItemInput!]!): OrderResponse!
 }
 
-input AttributeInput {
-  name: String!
-  type: String!
-  items: [AttributeItemInput]
+input OrderItemInput {
+  productId: ID!
+  productName: String!
+  quantity: Int!
+  price: Float!
+  selectedAttributes: String
 }
 
-input AttributeItemInput {
-  displayValue: String!
-  value: String!
-}
-
-input PriceInput {
-  amount: Float!
-  currencyLabel: String!
-  currencySymbol: String!
+type OrderResponse {
+  success: Boolean!
+  orderId: ID
+  message: String
 }

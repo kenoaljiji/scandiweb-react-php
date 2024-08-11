@@ -37,6 +37,7 @@ class NavBar extends Component {
           to={to}
           onClick={(e) => this.activateLink(category.toLowerCase(), e)}
           className={classes.link}
+          data-testid={isActive ? 'active-category-link' : 'category-link'}
         >
           {category}
         </NavLink>
@@ -51,8 +52,9 @@ class NavBar extends Component {
       <nav className={classes.navbar} style={underlineStyle}>
         <ul className={classes['nav-links']}>
           {this.renderLink('/', 'All')}
-          {this.renderLink('/category/clothes', 'Clothes')}
-          {this.renderLink('/category/tech', 'Tech')}
+          {this.renderLink('/all', 'All')}
+          {this.renderLink('/clothes', 'Clothes')}
+          {this.renderLink('/tech', 'Tech')}
         </ul>
         <div className={classes.underline}></div>
       </nav>

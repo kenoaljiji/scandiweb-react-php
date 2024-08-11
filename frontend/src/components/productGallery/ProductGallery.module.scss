@@ -7,10 +7,12 @@
 
 .main-image {
   max-height: 600px;
+  max-width: 600px;
   position: relative; /* Needed for absolute positioning of arrows */
 
   img {
     max-height: 600px;
+    max-width: 700px;
   }
 }
 

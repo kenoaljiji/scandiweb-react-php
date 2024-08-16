@@ -25,7 +25,9 @@ class AddToCartButton extends Component {
       <button
         onClick={this.addToCart}
         disabled={!this.props.product.inStock}
-        data-testid='add-to-cart'
+        data-testid={
+          this.props.product.inStock ? 'add-to-cart' : 'add-to-cart-disabled'
+        }
         className={`${classes['add-to-cart-button']} ${
           !product.inStock && classes.disabled
         }`}

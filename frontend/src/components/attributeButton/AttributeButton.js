@@ -10,11 +10,17 @@ class AttributeButton extends Component {
       isColorAttribute,
       backgroundColor,
       size,
+      attribute,
     } = this.props;
     // Prepare a readable item name for use in data-testid
-    const itemName = item.name
-      ? item.name.replace(/\s+/g, '-').toLowerCase()
-      : 'default-name';
+
+    const itemName = item
+      ? item.value.replace(/\s+/g, '-')
+      : 'default-attribute-value';
+
+    const attributeName = attribute
+      ? attribute?.name.replace(/\s+/g, '-').toLowerCase()
+      : 'default-attribute-name';
 
     // Collect all applicable class names based on conditions
     let buttonClasses = [
@@ -39,7 +45,7 @@ class AttributeButton extends Component {
         onClick={onClick}
         style={backgroundColor ? { backgroundColor } : {}}
         disabled={size === 'small' ? true : false}
-        data-testid={`product-attribute-${itemName}`}
+        data-testid={`product-attribute-${attributeName}-${itemName}`}
       >
         {isColorAttribute ? null : item.value}
       </button>

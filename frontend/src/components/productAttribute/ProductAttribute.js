@@ -9,6 +9,7 @@ class ProductAttributes extends Component {
         size={this.props.size}
         key={item.id}
         item={item}
+        attribute={attribute}
         isSelected={selectedAttributeId === item.id}
         onClick={() =>
           this.props.handleAttributeSelect(attribute.name, item.id)
@@ -22,11 +23,16 @@ class ProductAttributes extends Component {
   render() {
     const { attribute, selectedAttribute } = this.props;
 
+    const attributeName = attribute
+      ? attribute.name.replace(/\s+/g, '-').toLowerCase()
+      : 'default-name';
+
     return (
       <div className={classes.attributes}>
         <h3>{attribute.name}</h3>
         <div
           className={classes['attributes-item']}
+          data-testid={`product-attribute-${attributeName}`}
           style={{
             gridTemplateColumns:
               attribute.id === 'Color'

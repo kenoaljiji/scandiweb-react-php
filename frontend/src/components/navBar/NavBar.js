@@ -52,7 +52,7 @@ class NavBar extends Component {
       <nav className={classes.navbar} style={underlineStyle}>
         <ul className={classes['nav-links']}>
           {this.renderLink('/', 'All')}
-          {this.renderLink('/all', 'All')}
+          {/* {this.renderLink('/all', 'All')} */}
           {this.renderLink('/clothes', 'Clothes')}
           {this.renderLink('/tech', 'Tech')}
         </ul>

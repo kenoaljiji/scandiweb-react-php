@@ -1,6 +1,10 @@
 .product-details {
   display: flex;
   gap: 10rem;
+
+  @media only screen and (max-width: 720px) {
+    flex-direction: column;
+  }
 }
 
 .product-summary {

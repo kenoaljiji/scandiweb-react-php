@@ -1,15 +1,15 @@
-import React, { createContext, Component } from 'react';
+import React, { createContext, Component } from "react";
 import {
   initializeAttributes,
   toCamelCase,
-} from '../helpers/initializeAttribute';
+} from "../helpers/initializeAttribute";
 
-import client from '../services/apollo-client';
+import client from "../services/apollo-client";
 import {
   GET_ATTRIBUTE_BY_PRODUCT_ID,
   GET_PRODUCTS_BY_CATEGORY,
   GET_PRODUCT_BY_ID,
-} from './queries';
+} from "./queries";
 
 export const ProductsContext = createContext();
 
@@ -37,10 +37,9 @@ export class ProductsProvider extends Component {
       .then((response) => {
         const product = response.data.product;
         if (product) {
-          const initialAttributes = initializeAttributes(product.attributes);
           this.setState({
             product: product,
-            selectedAttributes: initialAttributes,
+            selectedAttributes: {},
             loading: false,
           });
         } else {
@@ -48,7 +47,7 @@ export class ProductsProvider extends Component {
         }
       })
       .catch((error) => {
-        console.error('Error loading product details:', error);
+        console.error("Error loading product details:", error);
         this.setState({ loading: false });
       });
   };

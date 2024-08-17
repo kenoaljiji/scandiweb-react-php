@@ -13,7 +13,7 @@ class ProductCard extends Component {
       product.category.toLowerCase().replace(/ /g, "-")
     );
 
-    navigate(`/product/${category}/${product.id}`);
+    navigate(`/product/${product.id}`);
   };
 
   onClickAddProduct = (e) => {

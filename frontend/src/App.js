@@ -24,7 +24,7 @@ class App extends Component {
             <Route path="/all" element={<Navigate to="/" />} />
             <Route path="/:categoryName" element={<ProductListingPage />} />
             <Route
-              path="/product/:category/:productId"
+              path="/product/:productId"
               element={<ProductDetailsPage />}
             />
             <Route path="*" element={<NotFound />} />

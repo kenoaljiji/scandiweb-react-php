@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import AddToCartIcon from '../../icons/AddToCartIcon';
-import { CartContext } from '../../context/CartContext';
-import classes from './Product.module.scss';
-import { initializeAttributes } from '../../helpers/initializeAttribute';
+import React, { Component } from "react";
+import AddToCartIcon from "../../icons/AddToCartIcon";
+import { CartContext } from "../../context/CartContext";
+import classes from "./Product.module.scss";
+import { initializeAttributes } from "../../helpers/initializeAttribute";
 
 class ProductCard extends Component {
   static contextType = CartContext;
@@ -10,7 +10,7 @@ class ProductCard extends Component {
   navigateToProduct = () => {
     const { product, navigate } = this.props;
     const category = encodeURIComponent(
-      product.category.toLowerCase().replace(/ /g, '-')
+      product.category.toLowerCase().replace(/ /g, "-")
     );
 
     navigate(`/product/${category}/${product.id}`);
@@ -18,6 +18,7 @@ class ProductCard extends Component {
 
   onClickAddProduct = (e) => {
     const { product } = this.props;
+    const { addToCart, toggleCart } = this.context;
 
     const initialAttributes = initializeAttributes(product.attributes);
 
@@ -27,7 +28,8 @@ class ProductCard extends Component {
       quantity: 1,
     };
     e.stopPropagation();
-    this.context.addToCart(cartItem);
+    addToCart(cartItem);
+    toggleCart();
   };
 
   render() {
@@ -36,12 +38,12 @@ class ProductCard extends Component {
     return (
       <div
         className={`${classes.product} ${
-          !product.inStock ? classes['out-of-stock'] : ''
+          !product.inStock ? classes["out-of-stock"] : ""
         }`}
         onClick={this.navigateToProduct}
-        data-testid={`product-${product.name.toLowerCase().replace(/ /g, '-')}`}
+        data-testid={`product-${product.name.toLowerCase().replace(/ /g, "-")}`}
       >
-        <div className={classes['image-container']}>
+        <div className={classes["image-container"]}>
           <img
             src={product.gallery[0].url}
             alt={product.name}
@@ -49,9 +51,9 @@ class ProductCard extends Component {
           />
           {!product.inStock && <span>Out of stock</span>}
         </div>
-        <div className={classes['product-info']}>
+        <div className={classes["product-info"]}>
           <div
-            className={classes['add-to-cart-icon']}
+            className={classes["add-to-cart-icon"]}
             onClick={this.onClickAddProduct}
           >
             <AddToCartIcon />

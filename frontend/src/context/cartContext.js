@@ -1,6 +1,6 @@
-import React, { createContext, Component } from 'react';
-import client from '../services/apollo-client';
-import { PLACE_ORDER_MUTATION } from './queries';
+import React, { createContext, Component } from "react";
+import client from "../services/apollo-client";
+import { PLACE_ORDER_MUTATION } from "./queries";
 
 export const CartContext = createContext();
 
@@ -114,14 +114,14 @@ export class CartProvider extends Component {
       if (data.insertOrder.success) {
         this.setState({ cartItems: [], total: 0, totalItems: 0 }); // Clear the cart
         console.log(
-          'Order placed successfully with ID:',
+          "Order placed successfully with ID:",
           data.insertOrder.orderId
         );
       } else {
-        console.error('Order placement failed:', data.insertOrder.message);
+        console.error("Order placement failed:", data.insertOrder.message);
       }
     } catch (error) {
-      console.error('Error placing order:', error);
+      console.error("Error placing order:", error);
     }
     this.setState({ loading: false });
   };

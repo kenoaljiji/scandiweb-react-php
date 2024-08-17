@@ -1,21 +1,23 @@
 // src/components/addToCartButton/AddToCartButton.js
-import React, { Component } from 'react';
-import { CartContext } from '../../context/CartContext';
+import React, { Component } from "react";
+import { CartContext } from "../../context/CartContext";
 
-import classes from './AddToCartButton.module.scss';
+import classes from "./AddToCartButton.module.scss";
 
 class AddToCartButton extends Component {
   static contextType = CartContext;
 
   addToCart = () => {
     const { product, selectedAttributes } = this.props;
+    const { addToCart, toggleCart } = this.context;
     const cartItem = {
       ...product,
       selectedAttributes,
       quantity: 1,
     };
 
-    this.context.addToCart(cartItem);
+    addToCart(cartItem);
+    toggleCart();
   };
 
   render() {
@@ -26,13 +28,13 @@ class AddToCartButton extends Component {
         onClick={this.addToCart}
         disabled={!this.props.product.inStock}
         data-testid={
-          this.props.product.inStock ? 'add-to-cart' : 'add-to-cart-disabled'
+          product && product.inStock ? "add-to-cart" : "add-to-cart-disabled"
         }
-        className={`${classes['add-to-cart-button']} ${
+        className={`${classes["add-to-cart-button"]} ${
           !product.inStock && classes.disabled
         }`}
       >
-        {product.inStock ? 'Add to Cart' : 'Out of stock'}
+        {product.inStock ? "Add to Cart" : "Out of stock"}
       </button>
     );
   }

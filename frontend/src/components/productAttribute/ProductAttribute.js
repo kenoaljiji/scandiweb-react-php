@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import AttributeButton from '../attributeButton/AttributeButton';
-import classes from './ProductAttribute.module.scss';
+import React, { Component } from "react";
+import AttributeButton from "../attributeButton/AttributeButton";
+import classes from "./ProductAttribute.module.scss";
 
 class ProductAttributes extends Component {
   renderAttributeOptions = (attribute, selectedAttributeId) => {
@@ -14,30 +14,32 @@ class ProductAttributes extends Component {
         onClick={() =>
           this.props.handleAttributeSelect(attribute.name, item.id)
         }
-        isColorAttribute={attribute.id === 'Color'}
-        backgroundColor={attribute.type === 'swatch' ? item.value : undefined}
+        isColorAttribute={attribute.id === "Color"}
+        backgroundColor={attribute.type === "swatch" ? item.value : undefined}
       />
     ));
   };
 
   render() {
-    const { attribute, selectedAttribute } = this.props;
+    const { attribute, selectedAttribute, size } = this.props;
 
     const attributeName = attribute
-      ? attribute.name.replace(/\s+/g, '-').toLowerCase()
-      : 'default-name';
+      ? attribute.name.replace(/\s+/g, "-").toLowerCase()
+      : "default-name";
+    const productAttrOrCartAttr =
+      size === "small" ? "cart-item-attribute" : "product-attribute";
 
     return (
       <div className={classes.attributes}>
         <h3>{attribute.name}</h3>
         <div
-          className={classes['attributes-item']}
-          data-testid={`product-attribute-${attributeName}`}
+          className={classes["attributes-item"]}
+          data-testid={`${productAttrOrCartAttr}-${attributeName}`}
           style={{
             gridTemplateColumns:
-              attribute.id === 'Color'
-                ? 'repeat(5, min-content)'
-                : 'repeat(4, min-content)',
+              attribute.id === "Color"
+                ? "repeat(5, min-content)"
+                : "repeat(4, min-content)",
           }}
         >
           {this.renderAttributeOptions(attribute, selectedAttribute)}

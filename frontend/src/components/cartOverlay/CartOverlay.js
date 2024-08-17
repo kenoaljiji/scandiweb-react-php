@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { CartContext } from '../../context/CartContext';
-import Cart from '../cart/Cart';
-import classes from './CartOverlay.module.scss';
+import React, { Component } from "react";
+import { CartContext } from "../../context/CartContext";
+import Cart from "../cart/Cart";
+import classes from "./CartOverlay.module.scss";
 
 class CartOverlay extends Component {
   static contextType = CartContext;
@@ -14,11 +14,11 @@ class CartOverlay extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener("scroll", this.handleScroll);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll);
   }
 
   handleScroll = () => {
@@ -39,17 +39,17 @@ class CartOverlay extends Component {
 
     const { isScrolled } = this.state;
     const cartStyle = {
-      position: isScrolled ? 'fixed' : 'absolute',
+      position: isScrolled ? "fixed" : "absolute",
     };
 
     return (
       <div
         className={classes.overlay}
         onClick={this.closeCart}
-        data-testid='cart-overlay'
+        data-testid="cart-overlay"
       >
         <div
-          className={classes['cart-container']}
+          className={classes["cart-container"]}
           onClick={(e) => e.stopPropagation()}
           style={cartStyle}
         >

@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const GET_PRODUCTS_BY_CATEGORY = gql`
   query GetProducts($category: String!) {
@@ -63,21 +63,6 @@ export const GET_PRODUCT_BY_ID = gql`
           label
           symbol
         }
-      }
-    }
-  }
-`;
-
-export const GET_ATTRIBUTE_BY_PRODUCT_ID = gql`
-  query fetchAttributes($productId: ID!) {
-    attributes(id: $productId) {
-      id
-      name
-      type
-      items {
-        id
-        displayValue
-        value
       }
     }
   }

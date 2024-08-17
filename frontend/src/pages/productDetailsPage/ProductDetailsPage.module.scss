@@ -1,9 +1,15 @@
 .product-details {
   display: flex;
   gap: 10rem;
+  padding: 15px;
 
-  @media only screen and (max-width: 720px) {
+  @media only screen and (max-width: 1024px) {
+    gap: 5rem;
+  }
+
+  @media only screen and (max-width: 920px) {
     flex-direction: column;
+    gap: 3rem;
   }
 }
 
@@ -23,7 +29,7 @@
 .price {
   margin-top: 1.5rem;
   h3 {
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
     text-transform: uppercase;
   }
 }

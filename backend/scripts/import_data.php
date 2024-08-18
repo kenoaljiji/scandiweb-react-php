@@ -65,40 +65,66 @@ foreach ($data['products'] as $product) {
     }
 
     // Insert attributes and attribute items
-    foreach ($product['attributes'] as $attribute) {
-        $attr_id = $conn->real_escape_string($attribute['id']);
-        $attr_name = $conn->real_escape_string($attribute['name']);
-        $attr_type = $conn->real_escape_string($attribute['type']);
+    // Insert attributes and attribute items
+foreach ($product['attributes'] as $attribute) {
+    $attr_id = $conn->real_escape_string($attribute['id']);
+    $attr_name = $conn->real_escape_string($attribute['name']);
+    $attr_type = $conn->real_escape_string($attribute['type']);
 
-        // Insert attribute using its name as the ID
-        $sql = "INSERT INTO attributes (id, name, type) VALUES ('$attr_id', '$attr_name', '$attr_type')
-                ON DUPLICATE KEY UPDATE name=VALUES(name), type=VALUES(type)";
+    echo "Processing attribute: $attr_name for product: $name\n"; // Debugging output
+
+    // Insert attribute using its name as the ID
+    $sql = "INSERT INTO attributes (id, name, type) VALUES ('$attr_id', '$attr_name', '$attr_type')
+            ON DUPLICATE KEY UPDATE name=VALUES(name), type=VALUES(type)";
+    if (!$conn->query($sql)) {
+        echo "Error: " . $conn->error . "\n";
+    }
+
+    // Insert attribute items
+    // Insert attributes and attribute items
+foreach ($product['attributes'] as $attribute) {
+    $attr_id = $conn->real_escape_string($attribute['id']);
+    $attr_name = $conn->real_escape_string($attribute['name']);
+    $attr_type = $conn->real_escape_string($attribute['type']);
+
+    echo "Processing attribute: $attr_name (ID: $attr_id) for product: $name\n"; // Debugging output
+
+    // Insert attribute using its name as the ID
+    $sql = "INSERT INTO attributes (id, name, type) VALUES ('$attr_id', '$attr_name', '$attr_type')
+            ON DUPLICATE KEY UPDATE name=VALUES(name), type=VALUES(type)";
+    if (!$conn->query($sql)) {
+        echo "Error: " . $conn->error . "\n";
+    }
+
+    // Insert attribute items
+    foreach ($attribute['items'] as $item) {
+        // Generate a unique ID by combining attribute_id and item_id
+        $item_id = $conn->real_escape_string($item['id']);
+        $unique_item_id = $attr_id . '-' . $item_id;
+        $displayValue = $conn->real_escape_string($item['displayValue']);
+        $value = $conn->real_escape_string($item['value']);
+
+        echo "Processing item: $displayValue (ID: $unique_item_id) for attribute: $attr_name\n"; // Debugging output
+
+        $sql = "INSERT INTO attribute_items (id, attribute_id, displayValue, value) 
+                VALUES ('$unique_item_id', '$attr_id', '$displayValue', '$value')
+                ON DUPLICATE KEY UPDATE displayValue=VALUES(displayValue), value=VALUES(value)";
         if (!$conn->query($sql)) {
-            echo "Error: " . $conn->error . "\n";
+            echo "Error inserting item $displayValue for attribute $attr_name: " . $conn->error . "\n";
         }
 
-        // Insert attribute items
-        foreach ($attribute['items'] as $item) {
-            $item_id = $conn->real_escape_string($item['id']);
-            $displayValue = $conn->real_escape_string($item['displayValue']);
-            $value = $conn->real_escape_string($item['value']);
-
-            $sql = "INSERT INTO attribute_items (id, attribute_id, displayValue, value) 
-                    VALUES ('$item_id', '$attr_id', '$displayValue', '$value')
-                    ON DUPLICATE KEY UPDATE displayValue=VALUES(displayValue), value=VALUES(value)";
-            if (!$conn->query($sql)) {
-                echo "Error: " . $conn->error . "\n";
-            }
-
-            // Link product and attribute
-            $sql = "INSERT INTO product_attributes (product_id, attribute_id) 
-                    VALUES ('$id', '$attr_id')
-                    ON DUPLICATE KEY UPDATE attribute_id=VALUES(attribute_id)";
-            if (!$conn->query($sql)) {
-                echo "Error: " . $conn->error . "\n";
-            }
+        // Link product and attribute
+        $sql = "INSERT INTO product_attributes (product_id, attribute_id) 
+                VALUES ('$id', '$attr_id')
+                ON DUPLICATE KEY UPDATE attribute_id=VALUES(attribute_id)";
+        if (!$conn->query($sql)) {
+            echo "Error linking attribute $attr_name to product $name: " . $conn->error . "\n";
         }
     }
+}
+
+}
+
 }
 
 echo "Data imported successfully.";

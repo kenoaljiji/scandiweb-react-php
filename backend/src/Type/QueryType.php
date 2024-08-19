@@ -4,12 +4,13 @@ namespace App\Type;
 
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ObjectType;
-use App\Resolvers\ProductResolver;
 
 class QueryType extends ObjectType
 {
     public function __construct()
     {
+
+    
         $config = [
             'name' => 'Query',
             'fields' => [

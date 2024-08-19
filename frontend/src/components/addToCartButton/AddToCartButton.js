@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import { CartContext } from "../../context/CartContext";
 
 import classes from "./AddToCartButton.module.scss";
-import { toCamelCase } from "../../helpers/initializeAttribute";
 
 class AddToCartButton extends Component {
   static contextType = CartContext;
 
   addToCart = () => {
     const { product, selectedAttributes } = this.props;
-    const { addToCart, toggleCart } = this.context;
+    const { addToCart, showCart } = this.context;
     const cartItem = {
       ...product,
       selectedAttributes,
@@ -17,7 +16,7 @@ class AddToCartButton extends Component {
     };
 
     addToCart(cartItem);
-    toggleCart();
+    showCart();
   };
 
   allAttributesSelected = () => {
@@ -39,25 +38,19 @@ class AddToCartButton extends Component {
   };
 
   render() {
-    const { product, selectedAttributes } = this.props;
+    const { product } = this.props;
     const allSelected = this.allAttributesSelected();
-
-    console.log(selectedAttributes);
 
     return (
       <button
         onClick={this.addToCart}
-        disabled={!product.inStock || !allSelected}
-        data-testid={
-          product && product.inStock && allSelected
-            ? "add-to-cart"
-            : "add-to-cart-disabled"
-        }
+        disabled={!allSelected || !product?.inStock}
+        data-testid="add-to-cart"
         className={`${classes["add-to-cart-button"]} ${
           (!product.inStock || !allSelected) && classes.disabled
         }`}
       >
-        {product.inStock ? "Add to Cart" : "Out of stock"}
+        {product?.inStock ? "ADD TO CART" : "OUT OF STOCK"}
       </button>
     );
   }

@@ -11,20 +11,26 @@ import { toCamelCase } from "../../helpers/initializeAttribute";
 
 class ProductDetailPage extends Component {
   static contextType = ProductsContext;
-  componentDidMount() {
+
+  state = {
+    isProductLoaded: false,
+  };
+
+  async componentDidMount() {
     const { productId } = this.props.params;
-    this.context.fetchProductById(productId);
+    await this.context.fetchProductById(productId);
+    this.setState({ isProductLoaded: true });
   }
 
   render() {
     const { product, selectedAttributes, loading } = this.context;
 
-    console.log(product);
+    const { isProductLoaded } = this.state;
 
     const productName =
       product && product.name?.replace(/\s+/g, "-").toLowerCase();
 
-    if (loading) return <Loader />;
+    if (loading || !isProductLoaded) return <Loader />;
 
     if (!product)
       return (

@@ -53,9 +53,8 @@ class Cart extends Component {
                 ))}
 
                 {item.attributes?.map((attr) => (
-                  <div className={classes.attribute}>
+                  <div className={classes.attribute} key={attr.name + attr.id}>
                     <ProductAttributes
-                      key={attr.name + attr.id}
                       attribute={attr}
                       selectedAttribute={
                         item.selectedAttributes[toCamelCase(attr.name)]

@@ -9,7 +9,7 @@ class Header extends Component {
   static contextType = CartContext; // Correctly set the contextType
 
   render() {
-    const { toggleCart } = this.context; // Use this.context to access toggleCart
+    const { toggleCart, showCart } = this.context; // Use this.context to access toggleCart
 
     return (
       <header className={`${classes.header}`}>

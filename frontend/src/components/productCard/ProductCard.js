@@ -18,7 +18,7 @@ class ProductCard extends Component {
 
   onClickAddProduct = (e) => {
     const { product } = this.props;
-    const { addToCart, toggleCart } = this.context;
+    const { addToCart, showCart } = this.context;
 
     const initialAttributes = initializeAttributes(product.attributes);
 
@@ -29,7 +29,7 @@ class ProductCard extends Component {
     };
     e.stopPropagation();
     addToCart(cartItem);
-    toggleCart();
+    showCart();
   };
 
   render() {

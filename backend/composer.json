@@ -3,7 +3,8 @@
   "description": "A brief description of your project",
   "require": {
     "vlucas/phpdotenv": "^5.4",
-    "webonyx/graphql-php": "^15.12"
+    "webonyx/graphql-php": "^15.12",
+    "symfony/dotenv": "^7.1"
   },
   "autoload": {
     "psr-4": {

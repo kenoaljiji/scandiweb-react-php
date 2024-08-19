@@ -87,10 +87,25 @@ export class CartProvider extends Component {
     this.setState({ totalItems });
   };
 
-  toggleCart = () => {
+  debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func.apply(this, args);
+      }, delay);
+    };
+  };
+
+  toggleCart = this.debounce(() => {
     this.setState((prevState) => ({
       isCartOpen: !prevState.isCartOpen, // Toggle the cart visibility
     }));
+  }, 100); // Adjust the debounce time as necessary
+
+  // Show the cart overlay
+  showCart = () => {
+    this.setState({ isCartOpen: true });
   };
 
   // Function to place an order
@@ -135,6 +150,8 @@ export class CartProvider extends Component {
           removeFromCart: this.removeFromCart,
           toggleCart: this.toggleCart,
           placeOrder: this.placeOrder,
+          showCart: this.showCart,
+          hideCart: this.hideCart,
         }}
       >
         {this.props.children}

@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import ProductGallery from "../../components/productGallery/ProductGallery";
-import ProductAttributes from "../../components/productAttribute/ProductAttribute";
-import AddToCartButton from "../../components/addToCartButton/AddToCartButton";
-import { ProductsContext, withProducts } from "../../context/ProductsContext";
-import withRouter from "../../hocs/withRouter";
-import Loader from "../../components/loader/Loader";
-import classes from "./ProductDetailsPage.module.scss";
-import parse from "html-react-parser";
-import { toCamelCase } from "../../helpers/initializeAttribute";
+import React, { Component } from 'react';
+import ProductGallery from '../../components/productGallery/ProductGallery';
+import ProductAttributes from '../../components/productAttribute/ProductAttribute';
+import AddToCartButton from '../../components/addToCartButton/AddToCartButton';
+import { ProductsContext, withProducts } from '../../context/ProductsContext';
+import withRouter from '../../hocs/withRouter';
+import Loader from '../../components/loader/Loader';
+import classes from './ProductDetailsPage.module.scss';
+import parse from 'html-react-parser';
+import { toCamelCase } from '../../helpers/initializeAttribute';
 
 class ProductDetailPage extends Component {
   static contextType = ProductsContext;
@@ -28,9 +28,14 @@ class ProductDetailPage extends Component {
     const { isProductLoaded } = this.state;
 
     const productName =
-      product && product.name?.replace(/\s+/g, "-").toLowerCase();
+      product && product.name?.replace(/\s+/g, '-').toLowerCase();
 
-    if (loading || !isProductLoaded) return <Loader />;
+    if (loading || !isProductLoaded)
+      return (
+        <div className='container'>
+          <Loader />;
+        </div>
+      );
 
     if (!product)
       return (
@@ -41,12 +46,12 @@ class ProductDetailPage extends Component {
     else
       return (
         <div
-          className={classes["product-details"]}
+          className={classes['product-details']}
           data-testid={`product-${productName}`}
         >
           <ProductGallery images={product.gallery} />
 
-          <div className={classes["product-summary"]}>
+          <div className={classes['product-summary']}>
             <h4>{product.name}</h4>
             {product.attributes?.map((attr) => (
               <ProductAttributes
@@ -54,7 +59,7 @@ class ProductDetailPage extends Component {
                 attribute={attr}
                 selectedAttribute={selectedAttributes[toCamelCase(attr.name)]}
                 handleAttributeSelect={this.context.handleAttributeSelect}
-                size="big"
+                size='big'
               />
             ))}
             <div className={classes.price}>
@@ -71,8 +76,8 @@ class ProductDetailPage extends Component {
               selectedAttributes={selectedAttributes}
             />
             <div
-              data-testid="product-description"
-              className={classes["product-description"]}
+              data-testid='product-description'
+              className={classes['product-description']}
             >
               {product.description && parse(product.description)}
             </div>

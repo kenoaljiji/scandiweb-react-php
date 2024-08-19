@@ -13,6 +13,23 @@ export class CartProvider extends Component {
     loading: false,
   };
 
+  componentDidMount() {
+    const storedCartItems = localStorage.getItem('cartItems');
+    if (storedCartItems) {
+      const cartItems = JSON.parse(storedCartItems);
+      this.setState({ cartItems }, () => {
+        this.calculateTotal();
+        this.calculateTotalItems();
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.cartItems !== this.state.cartItems) {
+      localStorage.setItem('cartItems', JSON.stringify(this.state.cartItems));
+    }
+  }
+
   // Add to cart or increase quantity
   addToCart = (item) => {
     const existingItemIndex = this.state.cartItems.findIndex(

@@ -1,6 +1,10 @@
+@import '../../styles/mixins';
 .loader-container {
   display: flex;
   margin-top: 10px;
+  @include respond(tab-port) {
+    justify-content: center;
+  }
 }
 
 .loader {

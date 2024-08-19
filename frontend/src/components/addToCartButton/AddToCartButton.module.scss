@@ -1,12 +1,14 @@
+@import '../../styles/variable';
+
 .add-to-cart-button {
   display: block;
   width: 100%;
   padding: 12px 10px;
   text-transform: uppercase;
 
-  background: #0daf69;
+  background: $color-secondary;
   color: #fff;
-  border: 1px solid #0daf69;
+  border: 1px solid $color-secondary;
 
   margin: 20px 0;
   cursor: pointer;

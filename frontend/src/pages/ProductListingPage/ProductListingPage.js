@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import ProductCard from "../../components/productCard/ProductCard";
-import { withProducts } from "../../context/ProductsContext";
-import classes from "./ProductListingPage.module.scss";
-import withRouter from "../../hocs/withRouter";
-import Loader from "../../components/loader/Loader";
+import React, { Component } from 'react';
+import ProductCard from '../../components/productCard/ProductCard';
+import { withProducts } from '../../context/ProductsContext';
+import classes from './ProductListingPage.module.scss';
+import withRouter from '../../hocs/withRouter';
+import Loader from '../../components/loader/Loader';
 
 class ProductListingPage extends Component {
   state = {
@@ -22,7 +22,7 @@ class ProductListingPage extends Component {
   }
 
   loadProducts() {
-    const category = this.props.params?.categoryName || "all";
+    const category = this.props.params?.categoryName || 'all';
     this.setState({ loading: true }); // Start loading before fetching
     this.props.fetchProducts(category).then((response) => {
       this.setState({ products: response.data.products, loading: false }); // Stop loading after fetching
@@ -34,6 +34,9 @@ class ProductListingPage extends Component {
 
     return (
       <div className={classes.products}>
+        <h3 className={classes.heading}>
+          {this.props.params?.categoryName || 'all'}
+        </h3>
         <div className={classes.grid}>
           {loading ? (
             <Loader />

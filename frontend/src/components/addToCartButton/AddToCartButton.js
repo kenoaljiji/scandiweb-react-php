@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { CartContext } from "../../context/CartContext";
+import React, { Component } from 'react';
+import { CartContext } from '../../context/CartContext';
 
-import classes from "./AddToCartButton.module.scss";
+import classes from './AddToCartButton.module.scss';
 
 class AddToCartButton extends Component {
   static contextType = CartContext;
@@ -45,12 +45,12 @@ class AddToCartButton extends Component {
       <button
         onClick={this.addToCart}
         disabled={!allSelected || !product?.inStock}
-        data-testid="add-to-cart"
-        className={`${classes["add-to-cart-button"]} ${
+        data-testid='add-to-cart'
+        className={`${classes['add-to-cart-button']} ${
           (!product.inStock || !allSelected) && classes.disabled
         }`}
       >
-        {product?.inStock ? "ADD TO CART" : "OUT OF STOCK"}
+        {product?.inStock ? 'ADD TO CART' : 'OUT OF STOCK'}
       </button>
     );
   }

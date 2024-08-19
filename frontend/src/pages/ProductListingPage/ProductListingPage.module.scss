@@ -1,17 +1,28 @@
+@import '../../styles/mixins';
 .products {
   padding: 15px;
+
+  .heading {
+    text-transform: capitalize;
+    margin-bottom: 50px;
+
+    @include respond(phone) {
+      display: none;
+    }
+  }
+
   .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     margin-bottom: 6rem;
 
-    @media only screen and (max-width: 768px) {
+    @include respond(mid-tab) {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    @media only screen and (max-width: 500px) {
-      grid-template-columns: 1fr;
+    @include respond(phone) {
+      grid-template-columns: repeat(1fr);
     }
   }
 

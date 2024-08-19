@@ -1,3 +1,5 @@
+@import '../../styles/variable';
+
 .navbar {
   position: relative;
 }
@@ -23,7 +25,7 @@
   left: var(--underline-offset); // Use the CSS variable for left offset
   width: var(--underline-width); // Use the CSS variable for width
   height: 2px;
-  background-color: #1dcf65; // Active underline color
+  background-color: $color-active; // Active underline color
   transition: left 0.3s ease, width 0.3s ease;
   top: 35px;
 }
@@ -38,8 +40,8 @@
 
 .active .link {
   font-weight: 600;
-  color: #1dcf65;
+  color: $color-active;
 }
 .link:hover {
-  color: #1dcf65;
+  color: $color-active;
 }

@@ -1,19 +1,15 @@
-import React, { Component } from "react";
-import AddToCartIcon from "../../icons/AddToCartIcon";
-import { CartContext } from "../../context/CartContext";
-import classes from "./Product.module.scss";
-import { initializeAttributes } from "../../helpers/initializeAttribute";
+import React, { Component } from 'react';
+import AddToCartIcon from '../../icons/AddToCartIcon';
+import { CartContext } from '../../context/CartContext';
+import classes from './Product.module.scss';
+import { initializeAttributes } from '../../helpers/initializeAttribute';
 
 class ProductCard extends Component {
   static contextType = CartContext;
 
   navigateToProduct = () => {
     const { product, navigate } = this.props;
-    const category = encodeURIComponent(
-      product.category.toLowerCase().replace(/ /g, "-")
-    );
-
-    navigate(`/product/${product.id}`);
+    navigate(`/product/${product.category}/${product.id}`);
   };
 
   onClickAddProduct = (e) => {
@@ -38,12 +34,12 @@ class ProductCard extends Component {
     return (
       <div
         className={`${classes.product} ${
-          !product.inStock ? classes["out-of-stock"] : ""
+          !product.inStock ? classes['out-of-stock'] : ''
         }`}
         onClick={this.navigateToProduct}
-        data-testid={`product-${product.name.toLowerCase().replace(/ /g, "-")}`}
+        data-testid={`product-${product.name.toLowerCase().replace(/ /g, '-')}`}
       >
-        <div className={classes["image-container"]}>
+        <div className={classes['image-container']}>
           <img
             src={product.gallery[0].url}
             alt={product.name}
@@ -51,9 +47,9 @@ class ProductCard extends Component {
           />
           {!product.inStock && <span>Out of stock</span>}
         </div>
-        <div className={classes["product-info"]}>
+        <div className={classes['product-info']}>
           <div
-            className={classes["add-to-cart-icon"]}
+            className={classes['add-to-cart-icon']}
             onClick={this.onClickAddProduct}
           >
             <AddToCartIcon />

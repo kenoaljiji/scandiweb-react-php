@@ -93,10 +93,35 @@ function createTables($conn) {
     if (!$conn->query($sql)) {
         echo "Error creating table 'product_attributes': " . $conn->error . "\n";
     }
-}
 
-// Create tables if they don't exist
-createTables($conn);
+    // SQL to create the orders table
+    $sql = "CREATE TABLE IF NOT EXISTS orders (
+        id VARCHAR(255) PRIMARY KEY,
+        total DECIMAL(10, 2) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )";
+    if (!$conn->query($sql)) {
+        echo "Error creating table 'orders': " . $conn->error . "\n";
+    }
+
+    // SQL to create the order_items table
+    $sql = "CREATE TABLE IF NOT EXISTS order_items (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        order_id VARCHAR(255),
+        product_id VARCHAR(255) NOT NULL,
+        product_name VARCHAR(255) NOT NULL,
+        quantity INT NOT NULL,
+        price DECIMAL(10, 2) NOT NULL,
+        selected_attributes TEXT,
+        FOREIGN KEY (order_id) REFERENCES orders(id)
+    )";
+    if (!$conn->query($sql)) {
+        echo "Error creating table 'order_items': " . $conn->error . "\n";
+    }
+
+    }
+    // Create tables if they don't exist
+    createTables($conn);
 
 
 // Insert categories

@@ -10,6 +10,95 @@ $conn = Database::getConnection();
 $json = file_get_contents(__DIR__ . '/../data/data.json');
 $data = json_decode($json, true)['data'];
 
+
+// Function to create tables if they don't exist
+function createTables($conn) {
+    // Create categories table
+    $sql = "CREATE TABLE IF NOT EXISTS categories (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL UNIQUE
+    )";
+    if (!$conn->query($sql)) {
+        echo "Error creating table 'categories': " . $conn->error . "\n";
+    }
+
+    // Create products table
+    $sql = "CREATE TABLE IF NOT EXISTS products (
+        id VARCHAR(255) PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        inStock TINYINT(1) NOT NULL,
+        description TEXT,
+        category VARCHAR(255),
+        brand VARCHAR(255),
+        FOREIGN KEY (category) REFERENCES categories(name)
+    )";
+    if (!$conn->query($sql)) {
+        echo "Error creating table 'products': " . $conn->error . "\n";
+    }
+
+    // Create galleries table
+    $sql = "CREATE TABLE IF NOT EXISTS galleries (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        product_id VARCHAR(255),
+        url TEXT,
+        FOREIGN KEY (product_id) REFERENCES products(id)
+    )";
+    if (!$conn->query($sql)) {
+        echo "Error creating table 'galleries': " . $conn->error . "\n";
+    }
+
+    // Create prices table
+    $sql = "CREATE TABLE IF NOT EXISTS prices (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        product_id VARCHAR(255),
+        amount DECIMAL(10,2),
+        currency_label VARCHAR(255),
+        currency_symbol VARCHAR(255),
+        FOREIGN KEY (product_id) REFERENCES products(id)
+    )";
+    if (!$conn->query($sql)) {
+        echo "Error creating table 'prices': " . $conn->error . "\n";
+    }
+
+    // Create attributes table
+    $sql = "CREATE TABLE IF NOT EXISTS attributes (
+        id VARCHAR(255) PRIMARY KEY,
+        name VARCHAR(255),
+        type VARCHAR(255)
+    )";
+    if (!$conn->query($sql)) {
+        echo "Error creating table 'attributes': " . $conn->error . "\n";
+    }
+
+    // Create attribute_items table
+    $sql = "CREATE TABLE IF NOT EXISTS attribute_items (
+        id VARCHAR(255) PRIMARY KEY,
+        attribute_id VARCHAR(255),
+        displayValue VARCHAR(255),
+        value VARCHAR(255),
+        FOREIGN KEY (attribute_id) REFERENCES attributes(id)
+    )";
+    if (!$conn->query($sql)) {
+        echo "Error creating table 'attribute_items': " . $conn->error . "\n";
+    }
+
+    // Create product_attributes table
+    $sql = "CREATE TABLE IF NOT EXISTS product_attributes (
+        product_id VARCHAR(255),
+        attribute_id VARCHAR(255),
+        PRIMARY KEY (product_id, attribute_id),
+        FOREIGN KEY (product_id) REFERENCES products(id),
+        FOREIGN KEY (attribute_id) REFERENCES attributes(id)
+    )";
+    if (!$conn->query($sql)) {
+        echo "Error creating table 'product_attributes': " . $conn->error . "\n";
+    }
+}
+
+// Create tables if they don't exist
+createTables($conn);
+
+
 // Insert categories
 foreach ($data['categories'] as $category) {
     $name = $conn->real_escape_string($category['name']);

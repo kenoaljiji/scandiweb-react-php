@@ -66,7 +66,7 @@ DB_NAME=your_db_name</code></pre>
     <pre><code>npm install</code></pre>
   </li>
   <li>Run the frontend application:
-    <pre><code>npm run</code></pre>
+    <pre><code>npm run start</code></pre>
   </li>
 </ol>
 

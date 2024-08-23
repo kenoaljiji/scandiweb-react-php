@@ -104,21 +104,24 @@ export class CartProvider extends Component {
     this.setState({ totalItems });
   };
 
-  debounce = (func, delay) => {
-    let timeoutId;
+  //Throlle a click
+
+  throttle = (func, limit) => {
+    let inThrottle;
     return (...args) => {
-      if (timeoutId) clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
+      if (!inThrottle) {
         func.apply(this, args);
-      }, delay);
+        inThrottle = true;
+        setTimeout(() => (inThrottle = false), limit);
+      }
     };
   };
 
-  toggleCart = this.debounce(() => {
+  toggleCart = this.throttle(() => {
     this.setState((prevState) => ({
-      isCartOpen: !prevState.isCartOpen, // Toggle the cart visibility
+      isCartOpen: !prevState.isCartOpen,
     }));
-  }, 50); // Adjust the debounce time as necessary
+  }, 100); // Adjust the delay as needed
 
   // Show the cart overlay
   showCart = () => {

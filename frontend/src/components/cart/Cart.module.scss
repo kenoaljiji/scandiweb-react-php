@@ -1,4 +1,4 @@
-@import '../../styles/variable';
+@import '../../styles/main';
 
 .cart {
   display: flex;
@@ -116,11 +116,11 @@
     bottom: 24px;
     right: 25px;
     transform: scale(0.8);
+
+    @include respond(phone) {
+      bottom: 20px;
+    }
   }
-  /* > div > div {
-    width: 30px;
-    height: 30px;
-  } */
 }
 
 .total {

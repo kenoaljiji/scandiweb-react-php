@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { CartContext } from "../../context/CartContext";
-import { toCamelCase } from "../../helpers/initializeAttribute";
-import Loader from "../loader/Loader";
-import ProductAttributes from "../productAttribute/ProductAttribute";
-import classes from "./Cart.module.scss";
+import React, { Component } from 'react';
+import { CartContext } from '../../context/CartContext';
+import { toCamelCase } from '../../helpers/initializeAttribute';
+import Loader from '../loader/Loader';
+import ProductAttributes from '../productAttribute/ProductAttribute';
+import classes from './Cart.module.scss';
 
 class Cart extends Component {
   static contextType = CartContext;
@@ -24,8 +24,8 @@ class Cart extends Component {
         <div>
           {totalItems > 0 ? (
             <h4>
-              <span>My Bag, </span> {totalItems}{" "}
-              {totalItems > 1 ? "items" : "item"}
+              <span>My Bag, </span> {totalItems}{' '}
+              {totalItems > 1 ? 'items' : 'item'}
             </h4>
           ) : (
             <p>Your cart is empty</p>
@@ -33,16 +33,16 @@ class Cart extends Component {
         </div>
 
         {cartItems?.map((item, index) => (
-          <div key={item.id + index} className={classes["cart-items"]}>
+          <div key={item.id + index} className={classes['cart-items']}>
             <div
-              className={classes["cart-item-details"]}
-              style={{ borderBottom: "1px solid #eee", paddingBottom: "15px" }}
+              className={classes['cart-item-details']}
+              style={{ borderBottom: '1px solid #eee', paddingBottom: '15px' }}
             >
               <div
-                className={classes["item-1"]}
+                className={classes['item-1']}
                 data-testid={`product-${item.name
                   .toLowerCase()
-                  .replace(/ /g, "-")}`}
+                  .replace(/ /g, '-')}`}
               >
                 <h4>{item.name}</h4>
                 {item.prices.map((price, index) => (
@@ -62,22 +62,22 @@ class Cart extends Component {
                       handleAttributeSelect={(name, value) =>
                         this.handleAttributeSelection(item.id, name, value)
                       }
-                      size="small"
+                      size='small'
                     />
                   </div>
                 ))}
               </div>
 
-              <div className={classes["quality-controls"]}>
+              <div className={classes['quality-controls']}>
                 <button
                   onClick={() => addToCart(item)}
-                  data-testid="cart-item-amount-increase"
+                  data-testid='cart-item-amount-increase'
                 >
                   +
                 </button>
-                <span data-testid="cart-item-amount">{item.quantity}</span>
+                <span data-testid='cart-item-amount'>{item.quantity}</span>
                 <button
-                  data-testid="cart-item-amount-decrease"
+                  data-testid='cart-item-amount-decrease'
                   onClick={() =>
                     removeFromCart(item.id, item.selectedAttributes)
                   }
@@ -89,7 +89,7 @@ class Cart extends Component {
                 <img
                   src={item.gallery[0].url}
                   alt={item.name}
-                  className={classes["cart-item-image"]}
+                  className={classes['cart-item-image']}
                 />
               </div>
             </div>
@@ -97,14 +97,14 @@ class Cart extends Component {
         ))}
 
         <div className={classes.total}>
-          <span>Total:</span>{" "}
-          <span data-testid="cart-total">${total.toFixed(2)}</span>
+          <span>Total:</span>{' '}
+          <span data-testid='cart-total'>${total.toFixed(2)}</span>
         </div>
         {totalItems > 0 && (
-          <div className={classes["loader-container"]}>
+          <div className={classes['loader-container']}>
             <div className={classes.loader}>{loading && <Loader />}</div>
             <button
-              className={classes["place-order-button"]}
+              className={classes['place-order-button']}
               onClick={placeOrder}
             >
               Place Order

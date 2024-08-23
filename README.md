@@ -34,7 +34,7 @@ DB_NAME=your_db_name</code></pre>
       <li>If you are using a custom database configuration in your <code>.env</code> file, you must import the initial data before running the backend.</li>
     </ul>
     Run the following script to import the data:
-    <pre><code>php backend/scripts/import_data.php</code></pre>
+    <pre><code>php scripts/import_data.php</code></pre>
   </li>
   <li>Run the backend server:
     <pre><code>php -S localhost:8000 -t public</code></pre>
@@ -69,19 +69,6 @@ DB_NAME=your_db_name</code></pre>
     <pre><code>npm run</code></pre>
   </li>
 </ol>
-
-<h4>Project Structure</h4>
-<ul>
-  <li><strong>backend</strong>: Contains the PHP backend code.
-    <ul>
-      <li><code>src/</code>: Contains the source code for the backend.</li>
-      <li><code>public/</code>: Contains the public-facing PHP files.</li>
-      <li><code>config/</code>: Configuration files, including environment variable handling.</li>
-      <li><code>scripts/</code>: Scripts for tasks like importing data.</li>
-    </ul>
-  </li>
-  <li><strong>frontend</strong>: Contains the React frontend code.</li>
-</ul>
 
 <h4>Notes</h4>
 <ul>

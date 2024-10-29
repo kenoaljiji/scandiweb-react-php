@@ -1,6 +1,6 @@
 <h1>Scandiweb Test Assignment</h1>
 
-<p>This project is a test assignment for Scandiweb. It consists of a PHP backend and a React frontend. The backend provides API endpoints and handles database interactions, while the frontend is a user interface that communicates with the backend.</p>
+<p>This project is a test assignment for Scandiweb. It consists of a PHP backend and a React frontend using Class Component. The backend provides API endpoints and handles database interactions, while the frontend is a user interface that communicates with the backend.</p>
 
 <h4>Backend Setup</h4>
 
@@ -77,4 +77,4 @@ DB_NAME=your_db_name</code></pre>
 </ul>
 
 <h4>Conclusion</h4>
-<p>This project demonstrates a fullstack application with a PHP backend and a React frontend. Follow the instructions above to set up and run both parts of the application.</p>
+<p>This project demonstrates a fullstack application with a PHP backend and a React frontend using a Class Components. Follow the instructions above to set up and run both parts of the application.</p>
